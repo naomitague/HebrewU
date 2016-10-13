@@ -19,7 +19,7 @@ To install follow the instructions:
 To link Rstudio and our version control software (Git), you need to first create a GitHub account, and then configure your computer to understand/interact with git
 and then finally link it with R studio
 
-To do this: follow these instructions - get as far as creating a new project
+To do this: follow these instructions - get as far as creating a new project - for now leave the project empty; but make sure you create with a git repository
 
 <https://www.r-bloggers.com/rstudio-and-github/>
 
@@ -56,7 +56,7 @@ for (p in pkgs){
 
 # Simple example
 You will first need to download clim.txt from ; and move it to your working directory - the directory you created when you made your first project in Rstudio. Now use the following R code to read that file in to R and do some basic analysis
-You man need to set your working directory first
+You man need to set your working directory to the project directory
 
 ```{r readingexample}
 clim = read.table("clim.txt", sep=",", header=T)
@@ -91,9 +91,9 @@ range(clim$tmax)
 ```
 
 You have 3 options for writing R code, 
-* directly type into the console
-* open an R script file
-* **add as a R module in an R Markdown file**
+* directly type into the console (temporary)
+* open an R script file (can be saved to git)
+* **add as a R module in an R Markdown file** (can be saved to git)
 
 ## Including Plots
 
