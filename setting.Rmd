@@ -142,13 +142,28 @@ ggplot(subset(clim, clim$wy < 1950), aes(x=as.factor(wy), y=rain))+stat_summary(
 # Git steps
 
 Look at Git - 
-## Tracking things locally
+## Tracking things locally with git
 
 * Check on the file you want to stage
 * Commit
-* This will create your master branch
-     * Make a change to a file
-* Use diff to see what changed (you have to save the file first)
+     * This will create your master branch
+* Make a change to a file
+* Use diff to see what changed 
+     * you must save the file first
 * Commit changes
 * Use history to see how things have changed 
 * Repeat as you change things
+
+## Saving to your global github (for sharing)
+
+* Make sure you have committed all recent changes
+* get the http address from your github repo
+* Open a shell in Git tab in Rstudio
+
+type
+
+git remote add origin **address**
+
+git push -u origin master
+
+* Notice how now under the Git tab you have colored arrows, you can now use these to push and pull from github to your local repo
