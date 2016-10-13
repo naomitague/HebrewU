@@ -49,6 +49,7 @@ pkgs = c(
 for (p in pkgs){
   if (!require(p, character.only=T)){
     install.packages(p)
+  
   }
 }
 ```
@@ -58,7 +59,8 @@ for (p in pkgs){
 You will first need to download clim.txt from ; and move it to your working directory - the directory you created when you made your first project in Rstudio. Now use the following R code to read that file in to R and do some basic analysis
 You man need to set your working directory to the project directory
 
-```{r readingexample}
+```{r readingexample, include=TRUE}
+library(dplyr)
 clim = read.table("clim.txt", sep=",", header=T)
 # generate R understandable dates
 clim$date = as.Date(paste(clim$day, clim$month, clim$year, sep="/"),"%d/%m/%Y")
@@ -75,7 +77,7 @@ b = clim %>% select(wy,month,rain) %>% group_by(wy, month) %>%
     summarize_each(funs(sum))
    
 clim.mwy = inner_join(a,b)
-View(clim.wy)
+View(clim.mwy)
   
 tmp = clim
 
@@ -90,10 +92,11 @@ range(clim$tmax)
 
 ```
 
-You have 3 options for writing R code, 
-* directly type into the console (temporary)
-* open an R script file (can be saved to git)
-* **add as a R module in an R Markdown file** (can be saved to git)
+You have 3 options for writing R code
+
+*  directly type into the console (temporary)
+*  open an R script file (can be saved to git)
+*  **add as a R module in an R Markdown file** (can be saved to git)
 
 ## Including Plots
 
@@ -102,6 +105,7 @@ You have 3 options for writing R code,
 ```{r plots, echo=TRUE}
 # plots
 #simple time series
+library(ggplot2)
 ggplot(clim, aes(x=date,y=tmax))+geom_line()
 
 #simple boxplot
@@ -139,10 +143,12 @@ ggplot(subset(clim, clim$wy < 1950), aes(x=as.factor(wy), y=rain))+stat_summary(
 
 Look at Git - 
 ## Tracking things locally
-*Check on the file you want to stage
-*Commit
-*This will create your master branch
-*Make a change to a file
-*Use diff to see what changed (you have to save the file first)
-*commit changes
-*Use history to see how things have changed 
+
+* Check on the file you want to stage
+* Commit
+* This will create your master branch
+     * Make a change to a file
+* Use diff to see what changed (you have to save the file first)
+* Commit changes
+* Use history to see how things have changed 
+* Repeat as you change things
