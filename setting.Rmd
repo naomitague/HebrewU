@@ -1,0 +1,134 @@
+---
+title: "Getting started course tools"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Rstudio
+
+Rstudio will be the primary data analysis and visualization software that you will use for the course
+To install follow the instructions:
+
+<https://www.rstudio.com/products/rstudio/download/>.
+
+# Github and Rstudio
+
+To link Rstudio and our version control software (Git), you need to first create a GitHub account, and then configure your computer to understand/interact with git
+and then finally link it with R studio
+
+To do this: follow these instructions - get as far as creating a new project
+
+<https://www.r-bloggers.com/rstudio-and-github/>
+
+If you are using a newer version of MacOS, you may also need to install X-quartz so that R can open graphics windows on the fly
+
+<https://www.xquartz.org/>
+
+# Install Packages
+load some libraries that are likely to be useful
+
+```{r install-packages, eval=F}
+# Run this chunk only once in your Console
+# Do not evaluate when knitting Rmarkdown
+
+# list of packages
+pkgs = c(
+  'readr',        # read csv
+  'readxl',       # read xls
+  'dplyr',        # data frame manipulation
+  'tidyr',        # data tidying
+  'ggplot2')      # graphics package
+    
+
+# install packages if not found
+for (p in pkgs){
+  if (!require(p, character.only=T)){
+    install.packages(p)
+  }
+}
+```
+
+
+# Simple example
+You will first need to download clim.txt from ; and move it to your working directory - the directory you created when you made your first project in Rstudio. Now use the following R code to read that file in to R and do some basic analysis
+You man need to set your working directory first
+
+```{r readingexample}
+clim = read.table("clim.txt", sep=",", header=T)
+# generate R understandable dates
+clim$date = as.Date(paste(clim$day, clim$month, clim$year, sep="/"),"%d/%m/%Y")
+
+# look at the file
+View(clim)
+# see some summary statistics of the columns
+summary(clim)
+# create a new table that summarizes by wateryear, use mean for states, and sum for fluxes
+a = clim %>% select(wy,month,tmax, tmin) %>% group_by(wy, month) %>% 
+    summarize_each(funs(mean))
+   
+b = clim %>% select(wy,month,rain) %>% group_by(wy, month) %>% 
+    summarize_each(funs(sum))
+   
+clim.mwy = inner_join(a,b)
+View(clim.wy)
+  
+tmp = clim
+
+View(clim.mwy)
+
+#add a new variable
+clim$tavg = (clim$tmin+clim$tmax)/2
+range(clim$tavg)
+range(clim$tmin)
+range(clim$tmax)
+
+
+```
+
+You have 3 options for writing R code, 
+* directly type into the console
+* open an R script file
+* **add as a R module in an R Markdown file**
+
+## Including Plots
+
+
+
+```{r plots, echo=TRUE}
+# plots
+#simple time series
+ggplot(clim, aes(x=date,y=tmax))+geom_line()
+
+#simple boxplot
+ggplot(clim, aes(x=as.factor(month), y=tmax))+geom_boxplot()+labs(x="Month",y="Max T (C)")
+
+# use ggplot to aggregate for you
+g=ggplot(clim, aes(x=as.numeric(wy), y=tmax))
+g= g+stat_summary(fun.y=mean, geom="line", col="red")
+g 
+
+# add some prettier axis
+g= g+scale_x_continuous(breaks = seq(from=1940,to=2020,by=10), limits=c(1940,2020))
+
+# add another line
+g= g+ stat_summary(aes(x=as.numeric(wy), y=tmin), geom="line", col="blue", fun.y=mean)
+
+# add some labels
+g = g+labs(x="Water Year", y="Temperature (C)")
+g
+
+# subsetting 'on the fly'
+ggplot(subset(clim, clim$wy < 1950), aes(x=as.factor(wy), y=rain))+stat_summary(fun.y=sum, geom="bar", col="green", fill="blue")+labs(x="Water Year",y="Rain (mm)")
+
+
+```
+
+Note that in markdown the `echo = FALSE` parameter can be added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r plotsnoecho, echo=FALSE}
+
+ggplot(subset(clim, clim$wy < 1950), aes(x=as.factor(wy), y=rain))+stat_summary(fun.y=sum, geom="bar", col="green", fill="blue")+labs(x="Water Year",y="Rain (mm)")
+```
