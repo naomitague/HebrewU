@@ -260,7 +260,9 @@ ggplot(subset(clim, clim$wy &lt; 1950), aes(x=as.factor(wy), y=rain))+stat_summa
 </div>
 <div id="git-steps" class="section level1">
 <h1>Git steps</h1>
-<p>Look at Git - ## Tracking things locally with git</p>
+<p>Look at Git</p>
+<div id="tracking-things-locally-with-git" class="section level2">
+<h2>Tracking things locally with git</h2>
 <ul>
 <li>Check on the file you want to stage</li>
 <li>Commit
@@ -276,18 +278,21 @@ ggplot(subset(clim, clim$wy &lt; 1950), aes(x=as.factor(wy), y=rain))+stat_summa
 <li>Use history to see how things have changed</li>
 <li>Repeat as you change things</li>
 </ul>
+</div>
 <div id="saving-to-your-global-github-for-sharing" class="section level2">
 <h2>Saving to your global github (for sharing)</h2>
 <ul>
 <li>Make sure you have committed all recent changes</li>
-<li>get the http address from your github repo</li>
+<li>get the http <strong>address</strong> from your github repo</li>
 <li>Open a shell in Git tab in Rstudio</li>
 </ul>
 <p>type</p>
-<p>git remote add origin <strong>address</strong></p>
-<p>git push -u origin master</p>
+<p><em>git remote add origin</em> <strong>address</strong></p>
+<p><em>git push -u origin master</em></p>
 <ul>
-<li>Notice how now under the Git tab you have colored arrows, you can now use these to push and pull from github to your local repo</li>
+<li><p>Notice how now under the Git tab you have colored arrows, you can now use these to push and pull from github to your local repo</p></li>
+<li><p>now make a local change and use these to update your github repo</p></li>
+<li><p>look at your repo online to see what you’ve done</p></li>
 </ul>
 </div>
 </div>

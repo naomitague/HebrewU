@@ -141,7 +141,8 @@ ggplot(subset(clim, clim$wy < 1950), aes(x=as.factor(wy), y=rain))+stat_summary(
 
 # Git steps
 
-Look at Git - 
+Look at Git 
+
 ## Tracking things locally with git
 
 * Check on the file you want to stage
@@ -157,13 +158,17 @@ Look at Git -
 ## Saving to your global github (for sharing)
 
 * Make sure you have committed all recent changes
-* get the http address from your github repo
+* get the http **address** from your github repo
 * Open a shell in Git tab in Rstudio
 
 type
 
-git remote add origin **address**
+*git remote add origin* **address**  
 
-git push -u origin master
+*git push -u origin master*
 
 * Notice how now under the Git tab you have colored arrows, you can now use these to push and pull from github to your local repo
+
+* now make a local change and use these to update your github repo
+
+* look at your repo online to see what you've done
