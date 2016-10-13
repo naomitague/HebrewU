@@ -27,6 +27,8 @@ If you are using a newer version of MacOS, you may also need to install X-quartz
 
 <https://www.xquartz.org/>
 
+You will need to re-start R 
+
 # Install Packages
 load some libraries that are likely to be useful
 
@@ -132,3 +134,15 @@ Note that in markdown the `echo = FALSE` parameter can be added to the code chun
 
 ggplot(subset(clim, clim$wy < 1950), aes(x=as.factor(wy), y=rain))+stat_summary(fun.y=sum, geom="bar", col="green", fill="blue")+labs(x="Water Year",y="Rain (mm)")
 ```
+
+# Git steps
+
+Look at Git - 
+## Tracking things locally
+*Check on the file you want to stage
+*Commit
+*This will create your master branch
+*Make a change to a file
+*Use diff to see what changed (you have to save the file first)
+*commit changes
+*Use history to see how things have changed 
