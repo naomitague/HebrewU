@@ -1,0 +1,90 @@
+---
+title: "writing.submodels"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Running functions
+
+You can both create your own functions and utilize functions that other people have written - re-use!
+User contributed software is available in packages - three useful packages for ecohydrology are
+* **Evapotranspiration**
+* **EcoHydRology**
+
+
+the following website provides some additional tools:
+[link] (http://abouthydrology.blogspot.co.il/2012/08/r-resources-for-hydrologists.html)
+There are many others and new packages are being developed all the time but these are a useful place to start
+
+```{r install-packages, eval=F}
+# Run this chunk only once in your Console
+# Do not evaluate when knitting Rmarkdown
+
+# list of packages
+pkgs = c(
+  'dplyr',        # data frame manipulation
+  'tidyr',        # data tidying
+  'Evapotranspiration',   # many evapotranspiration submodels
+  'EcoHydRology',  # energy budget and ET
+  'ggplot2')      # graphics package
+    
+
+# install packages if not found
+for (p in pkgs){
+  if (!require(p, character.only=T)){
+    install.packages(p)
+  
+  }
+}
+library(ggplot2)
+library(Evapotranspiration)
+library(EcoHydRology)
+
+```
+
+## Examples
+
+You will need to read the help material on these packages to both the functions that are available and the inputs that they require
+let look at  few examples
+
+```{r userexamples, echo=TRUE}
+
+#start with a simple function - Longwave Radiation a body with a given temperature
+# look at function
+Longwave
+
+# estimate longwave from atmosphere for a sequence of air temperature
+# use our climate data
+clim = read.table("data/clim.txt", header=T, sep=",")
+
+# lets start with an atmospheric emissivity of around 0.7
+# reasonable value for clear sky and look at nightime longwave
+result = Longwave(0.7, clim$tmin)
+plot(result)
+# add to our clim data frame to make more interesting reulst
+clim$nightclearLW = result
+ggplot(clim, aes(y=nightclearLW, x=as.factor(month))) +geom_boxplot() 
+# but we know that atmospheric emissivity is much higher when it is cloudy - so lets compute an emmissivity
+clim$emissivity = ifelse(clim$rain > 0, 0.9, 0.7)
+
+clim$nightLW = Longwave(clim$emissivity, clim$tmin)
+p=ggplot(clim, aes(y=nightLW, x=as.factor(month), group=1)) +stat_summary(fun.y=mean, col="blue", geom="line")
+p
+p+stat_summary(aes(y=nightclearLW, x=as.factor(month), group=1),
+               fun.y=mean, col="red", geom="line")
+ggplot(clim, aes(y=nightLW-nightclearLW, x=as.factor(month), group=1)) +stat_summary(fun.y=mean, geom="line", col="red")
+#
+#from the EcoHydRology package - estimation of ET from Priestley-Taylor (PET from temperature)
+#lets start by looking at the functio
+
+PET_fromTemp
+PTpet
+
+#now lets try with some examples
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

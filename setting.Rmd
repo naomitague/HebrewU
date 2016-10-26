@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Rstudio
 
 Rstudio will be the primary data analysis and visualization software that you will use for the course
+
 To install follow the instructions:
 
 <https://www.rstudio.com/products/rstudio/download/>.
@@ -54,9 +55,23 @@ for (p in pkgs){
 }
 ```
 
+# Programming in R
+
+You have 3 options for writing R code
+
+*  directly type into the console (temporary)
+*  open an R script file (can be saved to git), useful for writing functions; next class!
+*  **add as a R module in an R Markdown file** (can be saved to git), helpful for documenting and presenting your work; I'm using an R Markdown file here
+
+
+
+
 
 # Simple example
-You will first need to download clim.txt from ; and move it to your working directory - the directory you created when you made your first project in Rstudio. Now use the following R code to read that file in to R and do some basic analysis
+You will first need to download clim.txt from ; and move it to your working directory - the directory you created when you made your first project in Rstudio. 
+
+Now use the following R code to read that file in to R and do some basic analysis. Play with it a little and try different plots, aggregations, communting different variables.
+
 You man need to set your working directory to the project directory
 
 ```{r readingexample, include=TRUE}
@@ -75,13 +90,11 @@ a = clim %>% select(wy,month,tmax, tmin) %>% group_by(wy, month) %>%
    
 b = clim %>% select(wy,month,rain) %>% group_by(wy, month) %>% 
     summarize_each(funs(sum))
-   
+
+# link data sets together (automatically uses shared colums)   
 clim.mwy = inner_join(a,b)
 View(clim.mwy)
-  
-tmp = clim
 
-View(clim.mwy)
 
 #add a new variable
 clim$tavg = (clim$tmin+clim$tmax)/2
@@ -99,20 +112,12 @@ boxplot(clim.mwy$rain~clim.mwy$month, ylab="Monthly Rainfall (mm)",
 
 
 
-You have 3 options for writing R code
 
-*  directly type into the console (temporary)
-*  open an R script file (can be saved to git)
-*  **add as a R module in an R Markdown file** (can be saved to git)
+# Git - how to use version control with your project
 
+R studio links nicely with git; you can use git to track changes both locally and in the remote repository
 
-
-
-
-
-# Git steps
-
-Look at Git 
+Lets start by assuming you've set up the project as described above
 
 ## Tracking things locally with git
 
