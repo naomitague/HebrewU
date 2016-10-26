@@ -61,7 +61,7 @@ You man need to set your working directory to the project directory
 
 ```{r readingexample, include=TRUE}
 library(dplyr)
-clim = read.table("clim.txt", sep=",", header=T)
+clim = read.table("data/clim.txt", sep=",", header=T)
 # generate R understandable dates
 clim$date = as.Date(paste(clim$day, clim$month, clim$year, sep="/"),"%d/%m/%Y")
 
@@ -89,8 +89,15 @@ range(clim$tavg)
 range(clim$tmin)
 range(clim$tmax)
 
+plot(clim$date, clim$tmax, type="l", col="red", ylab="Max Daily T (C)")
+
+boxplot(clim.mwy$rain~clim.mwy$month, ylab="Monthly Rainfall (mm)", 
+        xlab="Month", col=clim.mwy$month)
+
 
 ```
+
+
 
 You have 3 options for writing R code
 
@@ -98,46 +105,10 @@ You have 3 options for writing R code
 *  open an R script file (can be saved to git)
 *  **add as a R module in an R Markdown file** (can be saved to git)
 
-## Including Plots
 
 
 
-```{r plots, echo=TRUE}
-# plots
-#simple time series
-library(ggplot2)
-ggplot(clim, aes(x=date,y=tmax))+geom_line()
 
-#simple boxplot
-ggplot(clim, aes(x=as.factor(month), y=tmax))+geom_boxplot()+labs(x="Month",y="Max T (C)")
-
-# use ggplot to aggregate for you
-g=ggplot(clim, aes(x=as.numeric(wy), y=tmax))
-g= g+stat_summary(fun.y=mean, geom="line", col="red")
-g 
-
-# add some prettier axis
-g= g+scale_x_continuous(breaks = seq(from=1940,to=2020,by=10), limits=c(1940,2020))
-
-# add another line
-g= g+ stat_summary(aes(x=as.numeric(wy), y=tmin), geom="line", col="blue", fun.y=mean)
-
-# add some labels
-g = g+labs(x="Water Year", y="Temperature (C)")
-g
-
-# subsetting 'on the fly'
-ggplot(subset(clim, clim$wy < 1950), aes(x=as.factor(wy), y=rain))+stat_summary(fun.y=sum, geom="bar", col="green", fill="blue")+labs(x="Water Year",y="Rain (mm)")
-
-
-```
-
-Note that in markdown the `echo = FALSE` parameter can be added to the code chunk to prevent printing of the R code that generated the plot.
-
-```{r plotsnoecho, echo=FALSE}
-
-ggplot(subset(clim, clim$wy < 1950), aes(x=as.factor(wy), y=rain))+stat_summary(fun.y=sum, geom="bar", col="green", fill="blue")+labs(x="Water Year",y="Rain (mm)")
-```
 
 # Git steps
 
@@ -172,3 +143,5 @@ type
 * now make a local change and use these to update your github repo
 
 * look at your repo online to see what you've done
+
+* notice how now in git commit  it will also track your branch in comparison with remote repo
