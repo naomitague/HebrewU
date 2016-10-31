@@ -194,3 +194,12 @@ type
 * look at your repo online to see what you've done
 
 * notice how now in git commit  it will also track your branch in comparison with remote repo
+
+# Other people repositories
+
+Find the repository on Github and get its link: Clone with Https:
+
+The link for my repository is
+<https://github.com/naomitague/HebrewU.git>
+
+Start R studio again and 
