@@ -171,7 +171,8 @@ for (p in pkgs){
 <p>You will first need to download clim.txt from ; and move it to your working directory - the directory you created when you made your first project in Rstudio.</p>
 <p>Now use the following R code to read that file in to R and do some basic analysis. Play with it a little and try different plots, aggregations, communting different variables.</p>
 <p>You man need to set your working directory to the project directory</p>
-<pre class="r"><code>library(dplyr)</code></pre>
+<pre class="r"><code># useful library for data clean up, manipulation, formating
+library(dplyr)</code></pre>
 <pre><code>## 
 ## Attaching package: 'dplyr'</code></pre>
 <pre><code>## The following objects are masked from 'package:stats':
@@ -180,8 +181,70 @@ for (p in pkgs){
 <pre><code>## The following objects are masked from 'package:base':
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>clim = read.table(&quot;data/clim.txt&quot;, sep=&quot;,&quot;, header=T)
-# generate R understandable dates
+<pre class="r"><code># reading in text data; there are many other functions #that can be used to read other data types
+clim = read.table(&quot;data/clim.txt&quot;, sep=&quot;,&quot;, header=T)
+
+# clim is now a data frame; one of the most commonly used object types in R; it is like a matrix but can have a mixture of different data types 
+# see what columns are, look at first few lines
+head(clim)</code></pre>
+<pre><code>##       date       tmin       tmax   rain year month day   wy
+## 1 01/01/42 -14.444444 -5.0000000 20.828 1942     1   1 1942
+## 2 01/02/42 -14.444444 -0.5555556  0.000 1942     1   2 1942
+## 3 01/03/42 -10.000000 -1.1111111  0.000 1942     1   3 1942
+## 4 01/04/42 -10.000000  0.5555556  0.000 1942     1   4 1942
+## 5 01/05/42  -9.444444  2.2222222  0.000 1942     1   5 1942
+## 6 01/06/42  -7.777778  3.8888889  0.000 1942     1   6 1942</code></pre>
+<pre class="r"><code># or just the names
+names(clim)</code></pre>
+<pre><code>## [1] &quot;date&quot;  &quot;tmin&quot;  &quot;tmax&quot;  &quot;rain&quot;  &quot;year&quot;  &quot;month&quot; &quot;day&quot;   &quot;wy&quot;</code></pre>
+<pre class="r"><code># or add to a new window (need dplyr library for this)
+View(clim)
+
+
+# to access a particular column use $ or column number
+
+head(clim$tmax)</code></pre>
+<pre><code>## [1] -5.0000000 -0.5555556 -1.1111111  0.5555556  2.2222222  3.8888889</code></pre>
+<pre class="r"><code># to get a particular column and row, i.e rainfall on 5th day
+clim$rain[5]</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre class="r"><code>#or everything on the 10th day
+clim[10,]</code></pre>
+<pre><code>##        date      tmin     tmax rain year month day   wy
+## 10 01/10/42 -1.666667 12.77778    0 1942     1  10 1942</code></pre>
+<pre class="r"><code>#first 5 rows of several columns
+clim[1:5, c(&quot;tmax&quot;,&quot;tmin&quot;,&quot;month&quot;)]</code></pre>
+<pre><code>##         tmax       tmin month
+## 1 -5.0000000 -14.444444     1
+## 2 -0.5555556 -14.444444     1
+## 3 -1.1111111 -10.000000     1
+## 4  0.5555556 -10.000000     1
+## 5  2.2222222  -9.444444     1</code></pre>
+<pre class="r"><code># the 'c' denotes a vector in R
+city = c(&quot;Jerusalem&quot;,&quot;Tel Aviv&quot;,&quot;Tsfat&quot;)
+estheight = c(500,10,1000)
+
+# you can combine vectors into a data frame
+siteinfo = as.data.frame(cbind(city,estheight))
+siteinfo</code></pre>
+<pre><code>##        city estheight
+## 1 Jerusalem       500
+## 2  Tel Aviv        10
+## 3     Tsfat      1000</code></pre>
+<pre class="r"><code># you can subset
+tmp = subset(clim, clim$day==20 &amp; clim$month==2 
+             &amp; clim$year &lt; 1950)
+tmp</code></pre>
+<pre><code>##          date        tmin       tmax  rain year month day   wy
+## 51   02/20/42  -6.6666667  5.5555556 0.000 1942     2  20 1942
+## 416  02/20/43   0.5555556 14.4444444 0.000 1943     2  20 1943
+## 781  02/20/44  -7.7777778  0.5555556 4.572 1944     2  20 1944
+## 1147 02/20/45 -11.1111111  1.6666667 0.000 1945     2  20 1945
+## 1512 02/20/46  -1.1111111  5.5555556 0.000 1946     2  20 1946
+## 1877 02/20/47  -0.5555556  7.7777778 0.000 1947     2  20 1947
+## 2242 02/20/48  -5.5555556 11.1111111 0.000 1948     2  20 1948
+## 2608 02/20/49  -5.0000000  7.2222222 0.000 1949     2  20 1949</code></pre>
+<pre class="r"><code># generate R understandable dates
 clim$date = as.Date(paste(clim$day, clim$month, clim$year, sep=&quot;/&quot;),&quot;%d/%m/%Y&quot;)
 
 # look at the file
@@ -209,7 +272,8 @@ summary(clim)</code></pre>
 ##  Mean   :1979  
 ##  3rd Qu.:1998  
 ##  Max.   :2016</code></pre>
-<pre class="r"><code># create a new table that summarizes by wateryear, use mean for states, and sum for fluxes
+<pre class="r"><code># create a new table that summarizes by wateryear, use mean for state variables, and sum for flux variables
+# this uses functions from the dplyr package
 a = clim %&gt;% select(wy,month,tmax, tmin) %&gt;% group_by(wy, month) %&gt;% 
     summarize_each(funs(mean))
    
@@ -219,10 +283,19 @@ b = clim %&gt;% select(wy,month,rain) %&gt;% group_by(wy, month) %&gt;%
 # link data sets together (automatically uses shared colums)   
 clim.mwy = inner_join(a,b)</code></pre>
 <pre><code>## Joining, by = c(&quot;wy&quot;, &quot;month&quot;)</code></pre>
-<pre class="r"><code>View(clim.mwy)
-
-
-#add a new variable
+<pre class="r"><code>head(clim.mwy)</code></pre>
+<pre><code>## Source: local data frame [6 x 5]
+## Groups: wy [1]
+## 
+##      wy month      tmax      tmin    rain
+##   &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1  1942     1  6.487455 -4.946237 118.110
+## 2  1942     2  3.293651 -8.392857 152.908
+## 3  1942     3  7.491039 -5.860215 126.492
+## 4  1942     4  9.240741 -3.129630 217.932
+## 5  1942     5 12.939068 -1.218638  55.626
+## 6  1942     6 20.771048  5.678605   0.000</code></pre>
+<pre class="r"><code>#add a new variable
 clim$tavg = (clim$tmin+clim$tmax)/2
 range(clim$tavg)</code></pre>
 <pre><code>## [1] -15.27778  25.27778</code></pre>

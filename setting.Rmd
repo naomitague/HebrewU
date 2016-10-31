@@ -75,8 +75,50 @@ Now use the following R code to read that file in to R and do some basic analysi
 You man need to set your working directory to the project directory
 
 ```{r readingexample, include=TRUE}
+
+# useful library for data clean up, manipulation, formating
 library(dplyr)
+
+# reading in text data; there are many other functions #that can be used to read other data types
 clim = read.table("data/clim.txt", sep=",", header=T)
+
+# clim is now a data frame; one of the most commonly used object types in R; it is like a matrix but can have a mixture of different data types 
+# see what columns are, look at first few lines
+head(clim)
+
+# or just the names
+names(clim)
+
+# or add to a new window (need dplyr library for this)
+View(clim)
+
+
+# to access a particular column use $ or column number
+
+head(clim$tmax)
+
+# to get a particular column and row, i.e rainfall on 5th day
+clim$rain[5]
+
+#or everything on the 10th day
+clim[10,]
+
+#first 5 rows of several columns
+clim[1:5, c("tmax","tmin","month")]
+
+# the 'c' denotes a vector in R
+city = c("Jerusalem","Tel Aviv","Tsfat")
+estheight = c(500,10,1000)
+
+# you can combine vectors into a data frame
+siteinfo = as.data.frame(cbind(city,estheight))
+siteinfo
+
+# you can subset
+tmp = subset(clim, clim$day==20 & clim$month==2 
+             & clim$year < 1950)
+tmp
+
 # generate R understandable dates
 clim$date = as.Date(paste(clim$day, clim$month, clim$year, sep="/"),"%d/%m/%Y")
 
@@ -84,7 +126,9 @@ clim$date = as.Date(paste(clim$day, clim$month, clim$year, sep="/"),"%d/%m/%Y")
 View(clim)
 # see some summary statistics of the columns
 summary(clim)
-# create a new table that summarizes by wateryear, use mean for states, and sum for fluxes
+
+# create a new table that summarizes by wateryear, use mean for state variables, and sum for flux variables
+# this uses functions from the dplyr package
 a = clim %>% select(wy,month,tmax, tmin) %>% group_by(wy, month) %>% 
     summarize_each(funs(mean))
    
@@ -93,7 +137,7 @@ b = clim %>% select(wy,month,rain) %>% group_by(wy, month) %>%
 
 # link data sets together (automatically uses shared colums)   
 clim.mwy = inner_join(a,b)
-View(clim.mwy)
+head(clim.mwy)
 
 
 #add a new variable

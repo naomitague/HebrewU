@@ -19,7 +19,7 @@ the following website provides some additional tools:
 [link] (http://abouthydrology.blogspot.co.il/2012/08/r-resources-for-hydrologists.html)
 There are many others and new packages are being developed all the time but these are a useful place to start
 
-```{r install-packages, eval=F}
+```{r install-packages, eval=T, echo=F}
 # Run this chunk only once in your Console
 # Do not evaluate when knitting Rmarkdown
 
