@@ -195,11 +195,15 @@ type
 
 * notice how now in git commit  it will also track your branch in comparison with remote repo
 
-# Other people repositories
+# Using existing (other people) repositories
 
 Find the repository on Github and get its link: Clone with Https:
 
 The link for my repository is
 <https://github.com/naomitague/HebrewU.git>
 
-Start R studio again and 
+Start R studio again and create a new project
+
+*  chose the option 'create from Git repository'
+*  use link you found on git site
+*  make sure you put this in a new directory so files don't conflict with other projects
