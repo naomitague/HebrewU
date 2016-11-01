@@ -13,16 +13,34 @@ Rstudio will be the primary data analysis and visualization software that you wi
 
 To install follow the instructions:
 
+You will first need R
+<https://cran.cnr.berkeley.edu/>
+
+Then R studio
 <https://www.rstudio.com/products/rstudio/download/>.
 
 # Github and Rstudio
 
-To link Rstudio and our version control software (Git), you need to first create a GitHub account, and then configure your computer to understand/interact with git
+To link Rstudio and our version control software (Git), you need to first create a GitHub account at:
+
+<https://github.com/>
+
+Remember you user name and password - you will need thme
+
+and then configure your computer to understand/interact with git, by downloading git software
+
+
+<https://git-scm.com/download/>
+
+
 and then finally link it with R studio
 
 To do this: follow these instructions - get as far as creating a new project - for now leave the project empty; but make sure you create with a git repository
 
 <https://www.r-bloggers.com/rstudio-and-github/>
+
+When you get to the section on opening a shell, Rstudio may download additional software
+
 
 If you are using a newer version of MacOS, you may also need to install X-quartz so that R can open graphics windows on the fly
 
@@ -194,6 +212,8 @@ type
 * look at your repo online to see what you've done
 
 * notice how now in git commit  it will also track your branch in comparison with remote repo
+
+* if you want other people to be able to make changes to your repo, add them as collaborators on the github website for that repo, under settings (see option on left side)
 
 # Using existing (other people) repositories
 
