@@ -1,6 +1,4 @@
-penman_montieth
-function(Tair, vpd, Rnet, gs,ga, dayl) {
-  
+
   #       Inputs:
   #
   #       Tair    (deg C) air temperature
@@ -24,6 +22,8 @@ function(Tair, vpd, Rnet, gs,ga, dayl) {
   #       et      (W/m2)          latent heat flux density
   #       ewater  (m/s)           water equiv. depth flux
   #       ewater.day      (m/day)         water equiv. depth flux
+penman_montieth
+function(Tair, vpd, Rnet, gs,ga, dayl) {
   
   # Constants
   CP  =      1010.0           # (J/kg*K) specific heat of air
@@ -70,5 +70,6 @@ function(Tair, vpd, Rnet, gs,ga, dayl) {
   # mmH20/day
   ewater.day = ewater * dayl*60*60 * 1000
   
+  # return from your function
   ewater.day
 }
