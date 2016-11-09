@@ -164,7 +164,9 @@ range(clim$tavg)
 range(clim$tmin)
 range(clim$tmax)
 
-plot(clim$date, clim$tmax, type="l", col="red", ylab="Max Daily T (C)")
+max(clim$tmin)
+
+plot(clim$date, clim$tmax, type="l", col="blue", ylab="Max Daily T (C)")
 
 boxplot(clim.mwy$rain~clim.mwy$month, ylab="Monthly Rainfall (mm)", 
         xlab="Month", col=clim.mwy$month)
