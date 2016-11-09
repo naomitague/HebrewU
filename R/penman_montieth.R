@@ -22,7 +22,7 @@
   #       et      (W/m2)          latent heat flux density
   #       ewater  (m/s)           water equiv. depth flux
   #       ewater.day      (m/day)         water equiv. depth flux
-penman_montieth
+penman_montieth =
 function(Tair, vpd, Rnet, gs,ga, dayl) {
   
   # Constants

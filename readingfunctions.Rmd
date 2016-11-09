@@ -1,0 +1,41 @@
+---
+title: "Writing.functions"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Penman function
+```{r functions}
+source("R/penman_montieth.R")
+penman_montieth
+help(penman_montieth)
+```
+
+## Applying
+
+
+
+```{r pressure, echo=TRUE}
+metdata = read.table("data/metdata.txt", header=T)
+metdata$date = as.Date(paste(metdata$year, metdata$month, metdata$day, sep="/"))
+# use data in function
+etres=with(metdata,penman_montieth(Tair=tavg, vpd=vpd, Rnet=rnet, gs=gs, ga=ga, dayl=24))
+
+#add to data set - so that we can plot variables
+metdata$et = etres
+
+plot(metdata$date, metdata$et, type="l", col="blue", 
+     ylab="ET in mm/day", xlab="Date")
+
+# imagine gs is from a larger tree double the LAI
+
+etres=with(metdata,penman_montieth(Tair=tavg, vpd=vpd, Rnet=rnet, gs=gs*4, ga=ga, dayl=24))
+lines(metdata$date, etres, col="green")
+
+# monthly values
+with(metdata, boxplot(et~month, ylab="ET (mm/day)", xlab="Month"))
+
+```

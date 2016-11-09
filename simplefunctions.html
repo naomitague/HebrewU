@@ -123,25 +123,6 @@ $(document).ready(function () {
 <h1>Running functions</h1>
 <p>You can both create your own functions and utilize functions that other people have written - re-use! User contributed software is available in packages - three useful packages for ecohydrology are * <strong>Evapotranspiration</strong> * <strong>EcoHydRology</strong></p>
 <p>the following website provides some additional tools: [link] (<a href="http://abouthydrology.blogspot.co.il/2012/08/r-resources-for-hydrologists.html" class="uri">http://abouthydrology.blogspot.co.il/2012/08/r-resources-for-hydrologists.html</a>) There are many others and new packages are being developed all the time but these are a useful place to start</p>
-<pre class="r"><code># Run this chunk only once in your Console
-# Do not evaluate when knitting Rmarkdown
-
-# list of packages
-pkgs = c(
-  'dplyr',        # data frame manipulation
-  'tidyr',        # data tidying
-  'Evapotranspiration',   # many evapotranspiration submodels
-  'EcoHydRology',  # energy budget and ET
-  'ggplot2')      # graphics package
-    
-
-# install packages if not found
-for (p in pkgs){
-  if (!require(p, character.only=T)){
-    install.packages(p)
-  
-  }
-}</code></pre>
 <pre><code>## Loading required package: dplyr</code></pre>
 <pre><code>## 
 ## Attaching package: 'dplyr'</code></pre>
@@ -184,9 +165,6 @@ for (p in pkgs){
 ## Differential Evolution algorithm in R
 ## Authors: D. Ardia, K. Mullen, B. Peterson and J. Ulrich</code></pre>
 <pre><code>## Loading required package: XML</code></pre>
-<pre class="r"><code>library(ggplot2)
-library(Evapotranspiration)
-library(EcoHydRology)</code></pre>
 <div id="examples" class="section level2">
 <h2>Examples</h2>
 <p>You will need to read the help material on these packages to both the functions that are available and the inputs that they require let look at few examples</p>
