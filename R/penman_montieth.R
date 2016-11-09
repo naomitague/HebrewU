@@ -1,12 +1,22 @@
+#' Penman Montieth Equation
+#' 
+#' THis function computer evapotranspiration based on radiation, conductance etc
+#' 
 
-  #       Inputs:
-  #
-  #       Tair    (deg C) air temperature
-  #       Pair    (Pa)    air pressure
-  #       vpd     (Pa)    vapour pressure deficit
-  #       Rnet    (j/m2/day)      net radiation
-  #       gs      (s/mm)  surface conductance
-  #       ga      (s/mm)  aerodynamic conductance
+#' @param        Tair    (deg C) air temperature
+#' @param    vpd     (Pa)    vapour pressure deficit
+#' @param     Rnet    (j/m2/day)      net radiation
+#' @param     gs      (s/mm)  surface conductance
+#' @param     ga      (s/mm)  aerodynamic conductance
+#' @param     CP  =      1010.0 (J/kg*K) specific heat of air
+#' @param    Pair = 101325 (Pa)
+#' @author Naomi
+#' @return Evapotranspiration (mm/day)
+ 
+ 
+penman_montieth =
+function(Tair, vpd, Rnet, gs,ga, dayl, CP=1010, Pair=101325) {
+  
   #       Internal Variables
   #
   #       rho     (kg/m3)         density of air
@@ -15,19 +25,8 @@
   #       s       (Pa/degC)       slope of sat vpd vs T curve
   #       rs      (s/m)   surface resistance
   #       ra      (s/m)   aerodynamic resistance
-  #
-  #       Output:
-  #
-  #       et      (kg/m2/s)       water vapour mass flux density
-  #       et      (W/m2)          latent heat flux density
-  #       ewater  (m/s)           water equiv. depth flux
-  #       ewater.day      (m/day)         water equiv. depth flux
-penman_montieth =
-function(Tair, vpd, Rnet, gs,ga, dayl) {
   
-  # Constants
-  CP  =      1010.0           # (J/kg*K) specific heat of air
-  Pair = 101325  # Pa atmospheric pressure - should decrease with elevation
+
   # convert Rnet to daytime value in j/m2/s
   Rnet = Rnet / (60*60*dayl)
   

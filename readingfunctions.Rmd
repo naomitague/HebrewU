@@ -1,5 +1,5 @@
 ---
-title: "Writing.functions"
+title: "Functions"
 output: html_document
 ---
 
@@ -8,9 +8,19 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Penman function
-```{r functions}
+```{r functions, EVAL=FALSE}
 source("R/penman_montieth.R")
 penman_montieth
+
+#get documentation to work
+# include devtools and roxygen2 packages
+library("devtools")
+library("roxygen2")
+setwd("../.")
+package.skeleton("Recohydro")
+document()
+
+#this should add files to the man subdirectory
 help(penman_montieth)
 ```
 
@@ -22,6 +32,7 @@ help(penman_montieth)
 metdata = read.table("data/metdata.txt", header=T)
 metdata$date = as.Date(paste(metdata$year, metdata$month, metdata$day, sep="/"))
 # use data in function
+source("penman_montieth")
 etres=with(metdata,penman_montieth(Tair=tavg, vpd=vpd, Rnet=rnet, gs=gs, ga=ga, dayl=24))
 
 #add to data set - so that we can plot variables
