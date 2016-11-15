@@ -89,12 +89,14 @@ with(metdata, boxplot(et~month, ylab="ET (mm/day)", xlab="Month"))
 
 ```
 
-Alternative you can actually formally load the package
+To actually make a package
+Go to Tools, Project Options, Build Tools and put in the directory of the package you created
+(check dev.tools and roxygen)
 
-in a shell type
-R CMD INSTALL ecohydrotools
-
+Then in Build
+Load all
+and when you make changes
+Build and Reload
 ```{r loadpackage, echo=TRUE}
-library(ecohydrotools)
 
 ```
