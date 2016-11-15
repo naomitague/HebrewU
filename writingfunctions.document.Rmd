@@ -130,10 +130,33 @@ setwd("/Users/naomi/UCSB.GoogleDrive/courses/Israel/Recohydro/ecohydrotools")
 document()
 help(compute_yield)
 
-compute_yield(4, 200, 0.3, 0.4, 5)
+compute_yield(T=20, P=250, irr=200, base.yield=500, Topt=25, max.water=800)
 # to see code
 compute_yield
 
+# lets see an example over multiple years
+# play with our metdata
+
+data(metdata)
+library(dplyr)
+# create a new table that summarizes by wateryear, use mean for state variables, and sum for flux variables
+# this uses functions from the dplyr package
+a = metdata %>% select(wy, tavg) %>% group_by(wy) %>% 
+    summarize_each(funs(mean))
+   
+b = metdata %>% select(wy,precip) %>% group_by(wy) %>% 
+    summarize_each(funs(sum))
+
+# link data sets together (automatically uses shared colums)   
+clim.wy = inner_join(a,b)
+head(clim.wy)
+
+# now apply
+res = compute_yield(T=clim.wy$tavg, P=clim.wy$precip, irr=200, base.yield=500, Topt=25, max.water=800)
+head(res)
+
+barplot(rbind(res$yield, res$yield.no.irrigation), beside=T, ylab="Yield (kg/yr", names=clim.wy$wy, col=c("blue","brown"), ylim=c(0,1000))
+legend("bottom", legend=c("Irrigation","No Irrigation"), col=c("blue","red"), pch=15, horiz=TRUE, bty="n", xpd=TRUE, inset=c(0,-1))
 ```
 
-Remember to add and commit these changes to you local git and when you are ready push to github
+**Remember to add and commit these changes to you local git and when you are ready push to github**
