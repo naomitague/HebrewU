@@ -88,3 +88,13 @@ lines(metdata$date, etres, col="green")
 with(metdata, boxplot(et~month, ylab="ET (mm/day)", xlab="Month"))
 
 ```
+
+Alternative you can actually formally load the package
+
+in a shell type
+R CMD INSTALL ecohydrotools
+
+```{r loadpackage, echo=TRUE}
+library(ecohydrotools)
+
+```
