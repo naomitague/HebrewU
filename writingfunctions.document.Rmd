@@ -7,8 +7,11 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Penman function
-```{r functions, eval=FALSE, echo=FALSE}
+## Documentation
+
+We can automatically create documentation with the Penman function as an example
+
+```{r functions, eval=FALSE, echo=TRUE}
 source("penman_montieth.R")
 penman_montieth
 
@@ -17,7 +20,7 @@ penman_montieth
 library("devtools")
 library("roxygen2")
 
-# this will create a package called #ecohydrotools and initialize it with R code #for penman
+# this will create a package called #ecohydrotools and initialize it with R code for penman_montieth
 package.skeleton(list="penman_montieth", name ="ecohydrotools")
 
 # go into ecohydrotools directory
@@ -38,10 +41,9 @@ and **data** is the standard directory used
 
 
 
-```{r data, echo=TRUE}
+```{r data, echo=TRUE, eval=FALSE}
 
-setwd("../")
-getwd()
+setwd("/Users/naomi/UCSB.GoogleDrive/courses/Israel/Recohydro/")
 metdata = read.table("data/metdata.txt", header=T)
 metdata$date = as.Date(paste(metdata$year, metdata$month, metdata$day, sep="/"))
 
@@ -51,7 +53,9 @@ save(metdata, file="ecohydrotools/data/metdata.RData")
 ```
 ## Applying
 Now make use of your code and data
+
 If re-open Rstudio, you won't have these files in your workspace
+
 The easiest way to get them in is to use **source** and then repeat documentation
 
 Best though trickier is to actually implement your package
@@ -59,19 +63,17 @@ Best though trickier is to actually implement your package
 ```{r apply, echo=TRUE}
 # use data in functions in ecohydrotools package
 
-setwd("./ecohydrotools")
+setwd("/Users/naomi/UCSB.GoogleDrive/courses/Israel/Recohydro/ecohydrotools")
 source("R/penman_montieth.R")
+library(roxygen2)
+library(devtools)
 document()
 # getting data
 data("metdata")
 etres=with(metdata,penman_montieth(Tair=tavg, vpd=vpd, Rnet=rnet, gs=gs, ga=ga, dayl=24))
 
-install.packages("ecohydrotools")
-library("ecohydrotools")
 
 
-
-etres=with(metdata,penman_montieth(Tair=tavg, vpd=vpd, Rnet=rnet, gs=gs, ga=ga, dayl=24))
 
 #add to data set - so that we can plot variables
 metdata$et = etres
@@ -89,14 +91,47 @@ with(metdata, boxplot(et~month, ylab="ET (mm/day)", xlab="Month"))
 
 ```
 
-To actually make a package
-Go to Tools, Project Options, Build Tools and put in the directory of the package you created
+## Making a package 
+
+Alternatively, we can make a package that you re-load (this is called building and reloading)
+
+Go to Tools, Project Options, Build Tools and write in in the directory of the package you created
 (check dev.tools and roxygen)
 
-Then in Build
+Then in Build (on Rstudio options)
 Load all
 and when you make changes
 Build and Reload
+
+When you start Rstudio with your project; after having closed your session
+go to Build; load all
+This will add everything
+
 ```{r loadpackage, echo=TRUE}
+
+data(metdata)
+etres=with(metdata,penman_montieth(Tair=tavg, vpd=vpd, Rnet=rnet, gs=gs, ga=ga, dayl=24))
+metdata$et = etres
+
+plot(metdata$date, metdata$et, type="l", col="blue", 
+     ylab="ET in mm/day", xlab="Date")
+
+```
+
+# adding more to your package
+
+Create your .R file with proper documentation format and then add it to the ecohydrotools/R directory
+
+Lets try with compute_yield.R, if its in that directory 
+document will automoatically find it
+```{r adaptpackage, echo=TRUE}
+
+setwd("/Users/naomi/UCSB.GoogleDrive/courses/Israel/Recohydro/ecohydrotools")
+document()
+help(compute_yield)
+
+compute_yield(4, 200, 0.3, 0.4, 5)
+# to see code
+compute_yield
 
 ```
