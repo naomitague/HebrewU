@@ -9,13 +9,14 @@
 #' @param     gs      (s/mm)  surface conductance
 #' @param     ga      (s/mm)  aerodynamic conductance
 #' @param     CP  =      1010.0 (J/kg*K) specific heat of air
+#' @param     newp sensitivity analysis default=1
 #' @param    Pair = 101325 (Pa)
 #' @author Naomi
 #' @return Evapotranspiration (mm/day)
  
  
 penman_montieth =
-function(Tair, vpd, Rnet, gs,ga, dayl, CP=1010, Pair=101325) {
+function(Tair, vpd, Rnet, gs,ga, dayl, CP=1010, Pair=101325, newp=1) {
   
   #       Internal Variables
   #
@@ -70,5 +71,5 @@ function(Tair, vpd, Rnet, gs,ga, dayl, CP=1010, Pair=101325) {
   ewater.day = ewater * dayl*60*60 * 1000
   
   # return from your function
-  ewater.day
+  ewater.day*newp
 }

@@ -1,4 +1,4 @@
----
+---source("penman_montieth.R")
 title: "Functions"
 output: html_document
 ---
@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 We can automatically create documentation with the Penman function as an example
 
 ```{r functions, eval=FALSE, echo=TRUE}
-source("penman_montieth.R")
+
 penman_montieth
 
 #get documentation to work

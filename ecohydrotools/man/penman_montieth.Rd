@@ -4,7 +4,8 @@
 \alias{penman_montieth}
 \title{Penman Montieth Equation}
 \usage{
-penman_montieth(Tair, vpd, Rnet, gs, ga, dayl, CP = 1010, Pair = 101325)
+penman_montieth(Tair, vpd, Rnet, gs, ga, dayl, CP = 1010, Pair = 101325,
+  newp = 1)
 }
 \arguments{
 \item{Tair}{(deg C) air temperature}
@@ -20,6 +21,8 @@ penman_montieth(Tair, vpd, Rnet, gs, ga, dayl, CP = 1010, Pair = 101325)
 \item{CP}{=      1010.0 (J/kg*K) specific heat of air}
 
 \item{Pair}{= 101325 (Pa)}
+
+\item{newp}{sensitivity analysis default=1}
 }
 \value{
 Evapotranspiration (mm/day)

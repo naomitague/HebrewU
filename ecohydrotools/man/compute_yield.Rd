@@ -4,33 +4,29 @@
 \alias{compute_yield}
 \title{compute annual yield'}
 \usage{
-compute_yield(T, P, irr, max.water, Topt, base.yield, Tslope = 0.4,
-  Pslope = 0.5)
+compute_yield(T, P, irr, crop.pars)
 }
 \arguments{
 \item{T}{annual temperature (C)}
 
 \item{P}{annual precipitation (mm)}
 
-\item{irr}{irrigation per year (mm/year)}
+\item{irr}{irrigation in (mm)}
+
+\item{T}{optimal temperature (C)}
 
 \item{max.water}{maximum water requirement (mm)}
 
-\item{Topt}{optimal temperature (C)}
+\item{ts}{slope on temperature}
+
+\item{tp}{slope on precipitation}
 
 \item{base.yield}{baseline yield  (kg)}
-
-\item{Tslope}{yield increase per C (default 0.4)}
-
-\item{Pslope}{yield increase per mm water (default 0.5)}
 }
 \value{
 yield in kg
 }
 \description{
 Function to compute yeild of different fruits as a function of annual temperature and precipitation
-}
-\examples{
-compute_yield(T=20, P=250, irr=200, base.yield=500, Topt=25, max.water=800)
 }
 
