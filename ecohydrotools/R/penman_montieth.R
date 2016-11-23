@@ -21,7 +21,6 @@ function(Tair, vpd, Rnet, gs,ga, dayl, CP=1010, Pair=101325, newp=1) {
   #       Internal Variables
   #
   #       rho     (kg/m3)         density of air
-  #       CP      (K/jg/degC)     specific heat of air
   #       lhvap   (J/kg)          latent heat of vapourization H20
   #       s       (Pa/degC)       slope of sat vpd vs T curve
   #       rs      (s/m)   surface resistance

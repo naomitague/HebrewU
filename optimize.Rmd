@@ -27,7 +27,7 @@ colnames(save.optimal.irr) = c("irr","profit")
 
 for (i in 1:length(cost)) {
 
-res = optimize(compute_profit, lower=0, upper=400, T=c(20,30,25), P=c(200,750,20), discount=discount, price=50, cost=cost[i], crop.pars=crop.pars,  maximum=T)
+res = optimize(compute_profit, lower=0, upper=400, T=c(20,30,25), P=c(200,750,20), discount=0.01, price=50, cost=cost[i], crop.pars=crop.pars,  maximum=T)
 save.optimal.irr[i,"irr"] = res$maximum
 save.optimal.irr[i,"profit"] = res$objective
 }
