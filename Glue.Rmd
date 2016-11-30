@@ -26,7 +26,10 @@ data(obsQ)
 data(parms)
 data(modQ3c)
 # or if you just want the datasets
-#load("data/modQ.RData")
+load("ecohydrotools/data/modQ.RData")
+load("ecohydrotools/data/obsQ.RData")
+load("ecohydrotools/data/parms.RData")
+source("ecohydrotools/R/NSE.R")
 # note where data information is
 head(obsQ)
 head(modQ)
@@ -63,6 +66,7 @@ tmp = apply(modQ.data, 2, NSE, o=obsQ.data)
 stats$nse = tmp
 
 # how do performance metric compare
+
 plot(stats$nse, stats$cor, ylab="Correlation", xlab="NSE", ylim=c(0,1), xlim=c(0,1))
 
 # another useful metric is found by taking the log of flows, if you have zero values in observed or modelled you will need to correct for this by adding a small amount
