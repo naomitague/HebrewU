@@ -7,8 +7,8 @@ output: html_document
 
 ```{r setup, echo=FALSE}
 #read in data
-thin = read.table("thinning.csv", sep=",", header=T)
-clim=read.csv("clim.csv")
+thin = read.table("data/thinning.csv", sep=",", header=T)
+clim=read.csv("data/clim.csv")
 #make sure you have libraries
 library(dplyr)
 library(tidyr)
@@ -119,7 +119,7 @@ We can use a more interesting data set *thin*
 
 
 
-```{r color}
+```{r colorp}
 p1=ggplot(thin, aes(x=as.factor(postyears), y=cpool, col=as.factor(thin)))+geom_boxplot()
 p1 = p1+labs(x="Years since thinning", y="Carbon Sequestration")
 p1
@@ -139,7 +139,7 @@ p1 = ggplot(thin, aes(x=postyears, y=cpool, col=as.factor(thin))) + stat_summary
 ```
 
 Now lets try *facets* or different graphs and play a bit with aggregating data by summing
-```{r color}
+```{r facet}
 p2 = ggplot(thin, aes(x=postyears, y=cpool))+stat_summary(fun.y="mean", geom="line")
 p2= p2+facet_wrap(~thin)
 

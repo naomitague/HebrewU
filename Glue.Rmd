@@ -31,8 +31,8 @@ load("ecohydrotools/data/obsQ.RData")
 load("ecohydrotools/data/parms.RData")
 source("ecohydrotools/R/NSE.R")
 # note where data information is
-head(obsQ)
-head(modQ)
+#head(obsQ)
+#head(modQ)
 
 nsims = ncol(modQ)-1
 both = merge(modQ,obsQ, by=c("date"))
